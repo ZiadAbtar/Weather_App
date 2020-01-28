@@ -11,6 +11,7 @@ class SplashActivity : AppCompatActivity() {
     private val handler = Handler()
     private var runnable: Runnable = Runnable {
         startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
