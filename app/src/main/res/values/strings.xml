@@ -5,4 +5,7 @@
     <string name="hint_cities">Comma separated city names</string>
     <string name="city_names_description">Enter a minimum of 3 cities and a maximum of 7 cities(place a comma between two city names)</string>
     <string name="fetch_weather_date">Fetch weather data</string>
+    <string name="Retry">Retry</string>
+    <string name="Unexpected_error">An unexpected error has occurred, please try again</string>
+    <string name="Internet_connection_error">Kindly check your internet connection and try again</string>
 </resources>
