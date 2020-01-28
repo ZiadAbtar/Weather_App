@@ -8,14 +8,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import com.ziad.weatherapp.R
 import com.ziad.weatherapp.app.base.BaseFragment
 import com.ziad.weatherapp.data.remote.request.CityWeatherRequest
 import com.ziad.weatherapp.data.remote.response.CityWeatherResponse
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class MultipleCitiesFragment : BaseFragment<CityWeatherResponse, MultipleCitiesViewModel>(),
     View.OnClickListener {
@@ -33,6 +34,12 @@ class MultipleCitiesFragment : BaseFragment<CityWeatherResponse, MultipleCitiesV
     ): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         mRecyclerView = view.findViewById(R.id.rv_cities_weather)
+        mRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
         mCitiesEditText = view.findViewById(R.id.et_cities)
         mProceedButton = view.findViewById(R.id.btn_fetch)
         mProceedButton.setOnClickListener(this)
@@ -61,7 +68,13 @@ class MultipleCitiesFragment : BaseFragment<CityWeatherResponse, MultipleCitiesV
     }
 
     override fun onSuccess(response: CityWeatherResponse) {
-        val x = response
+        if (response.cities.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), R.string.Unexpected_error, Toast.LENGTH_LONG).show()
+            return
+        }
+        val adapter = MultipleCitiesAdapter(requireContext())
+        mRecyclerView.adapter = adapter
+        adapter.setCities(response.cities)
     }
 
     override fun showProgress() {
