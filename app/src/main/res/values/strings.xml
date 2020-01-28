@@ -2,4 +2,7 @@
     <string name="app_name">Weather App</string>
     <string name="title_cities">Cities</string>
     <string name="title_current">Current</string>
+    <string name="hint_cities">Comma separated city names</string>
+    <string name="city_names_description">Enter a minimum of 3 cities and a maximum of 7 cities(place a comma between two city names)</string>
+    <string name="fetch_weather_date">Fetch weather data</string>
 </resources>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="City name big asd asd asd asd asasdsdsd " />
+
+        <TextView
+            android:id="@+id/tv_weather_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_city_name"
+            tools:text="windy, snowy, raining" />
+
+        <ImageView
+            android:id="@+id/iv_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_weather_description"
+            app:srcCompat="@drawable/ic_temperature" />
+
+        <TextView
+            android:id="@+id/tv_temp_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/black"
+
+            app:layout_constraintStart_toEndOf="@id/iv_temperature"
+            app:layout_constraintTop_toTopOf="@id/iv_temperature"
+            tools:text="120 degree" />
+
+        <TextView
+            android:id="@+id/tv_temp_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="@id/iv_temperature"
+            app:layout_constraintStart_toEndOf="@id/iv_temperature"
+            tools:text="110 degree" />
+
+        <ImageView
+            android:id="@+id/iv_wind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_temperature"
+            app:srcCompat="@drawable/ic_wind" />
+
+        <TextView
+            android:id="@+id/tv_wind_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="@id/iv_wind"
+            app:layout_constraintStart_toEndOf="@id/iv_wind"
+            app:layout_constraintTop_toTopOf="@id/iv_wind"
+            tools:text="1234" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
