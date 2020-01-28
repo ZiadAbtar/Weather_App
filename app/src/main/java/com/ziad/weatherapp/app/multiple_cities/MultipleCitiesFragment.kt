@@ -52,7 +52,6 @@ class MultipleCitiesFragment : BaseFragment<CityWeatherResponse, MultipleCitiesV
         viewModel.loadCitiesMap()
         viewModel.citiesMap.observe(viewLifecycleOwner, Observer {
             hideProgress()
-            val result = it
         })
     }
 
