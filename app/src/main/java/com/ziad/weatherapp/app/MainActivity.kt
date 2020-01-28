@@ -1,4 +1,4 @@
-package com.ziad.weatherapp
+package com.ziad.weatherapp.app
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.ziad.weatherapp.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_multiple_cities, R.id.navigation_current_location
+                R.id.navigation_multiple_cities,
+                R.id.navigation_current_location
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
