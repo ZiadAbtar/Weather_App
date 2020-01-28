@@ -1,11 +1,12 @@
-package com.ziad.weatherapp.app.data
+package com.ziad.weatherapp.data.remote.repository
 
 import android.util.Log
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader
 import com.ziad.weatherapp.WeahterApplication
-import com.ziad.weatherapp.app.data.local.City
+import com.ziad.weatherapp.data.local.City
+import com.ziad.weatherapp.data.remote.APIServer
+import com.ziad.weatherapp.data.remote.request.CityWeatherRequest
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -13,7 +14,12 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 
-object MultipleCitiesRepository {
+object MultipleCitiesRepository : BaseRepository() {
+
+
+    suspend fun getCurrentWeatherByCitiesIds(cityWeatherRequest: CityWeatherRequest) =
+        safeApiCall { APIServer.apiServer.getCurrentWeatherForCities(cityWeatherRequest) }
+
 
     suspend fun loadCities(
         dispatcher: CoroutineDispatcher = Dispatchers.IO
