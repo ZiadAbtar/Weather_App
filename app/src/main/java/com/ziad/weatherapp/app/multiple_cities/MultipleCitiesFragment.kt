@@ -34,12 +34,14 @@ class MultipleCitiesFragment : BaseFragment<CityWeatherResponse, MultipleCitiesV
     ): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         mRecyclerView = view.findViewById(R.id.rv_cities_weather)
-        mRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                DividerItemDecoration.VERTICAL
+        if(mRecyclerView.itemDecorationCount==0) {
+            mRecyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
             )
-        )
+        }
         mCitiesEditText = view.findViewById(R.id.et_cities)
         mProceedButton = view.findViewById(R.id.btn_fetch)
         mProceedButton.setOnClickListener(this)
