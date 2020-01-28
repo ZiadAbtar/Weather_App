@@ -12,6 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.util.*
+import kotlin.collections.HashMap
 
 
 object MultipleCitiesRepository : BaseRepository() {
@@ -38,7 +40,7 @@ object MultipleCitiesRepository : BaseRepository() {
             while (reader.hasNext()) {
                 val city: City = gson.fromJson(reader, City::class.java)
                 if (!city.name.isNullOrBlank() && city.id != null) {
-                    entries[city.name] = city.id
+                    entries[city.name.toLowerCase(Locale.getDefault())] = city.id
                 }
             }
             reader.endArray()

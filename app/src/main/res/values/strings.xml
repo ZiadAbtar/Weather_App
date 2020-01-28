@@ -8,4 +8,6 @@
     <string name="Retry">Retry</string>
     <string name="Unexpected_error">An unexpected error has occurred, please try again</string>
     <string name="Internet_connection_error">Kindly check your internet connection and try again</string>
+    <string name="check_conditions">Please check conditions and re-enter city names</string>
+    <string name="cities_not_found">Following cities were not found: %s\nPlease fix to proceed</string>
 </resources>

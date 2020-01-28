@@ -4,13 +4,18 @@ import com.google.gson.annotations.SerializedName
 import com.ziad.weatherapp.data.remote.response.base.BaseResponse
 
 data class CityWeatherResponse(
-    val count: Int? = 0,
+    @SerializedName("cnt") val count: Int? = 0,
+    @SerializedName("list") val cities: List<City>? = null
+) : BaseResponse()
+
+data class City(
     val id: Int? = 0,
     val name: String? = "",
     @SerializedName("weather") val weatherList: List<Weather>? = null,
     val main: Main? = null,
     val wind: Wind? = null
-) : BaseResponse()
+)
+
 
 data class Weather(
     val main: String? = "",

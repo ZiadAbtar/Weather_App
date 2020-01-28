@@ -2,7 +2,7 @@ package com.ziad.weatherapp.data.remote.request
 
 class CityWeatherRequest : BaseRequest() {
 
-    fun setCityIds(vararg ids: Int): CityWeatherRequest {
+    fun setCityIds(ids: ArrayList<Int>): CityWeatherRequest {
         var stringIds = ""
 
         for (i in ids.indices) {

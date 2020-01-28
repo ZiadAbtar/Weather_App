@@ -98,11 +98,11 @@ abstract class BaseFragment<RESPONSE : BaseResponse, V : BaseViewModel> : Fragme
     }
 
 
-    protected fun showProgress() {
+     open fun showProgress() {
         mProgress?.visibility = View.VISIBLE
     }
 
-    protected fun hideProgress() {
+     open fun hideProgress() {
         mProgress?.visibility = View.GONE
     }
 
