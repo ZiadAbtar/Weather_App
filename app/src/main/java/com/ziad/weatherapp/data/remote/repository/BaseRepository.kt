@@ -18,7 +18,7 @@ open class BaseRepository {
                 val response = apiCall.invoke() as Response<*>
                 if (response.body() is BaseResponse) {
                     val baseResponse = response.body() as RESPONSE
-                    if (baseResponse.apiError == null) {
+                    if (baseResponse.apiError != null) {
                         throw APIException(apiError = baseResponse.apiError)
                     }
                     ResultWrapper.Success(baseResponse)
