@@ -38,6 +38,7 @@ abstract class BaseFragment<RESPONSE : BaseResponse, V : BaseViewModel> : Fragme
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        mActivity = activity as MainActivity
         mRootView = inflater.inflate(getLayoutId, container, false)
         mProgress = mRootView.findViewById(R.id.pb_loading)
         return mRootView
@@ -46,7 +47,6 @@ abstract class BaseFragment<RESPONSE : BaseResponse, V : BaseViewModel> : Fragme
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mActivity = activity as MainActivity
         listener = this
         viewModel = ViewModelProvider.NewInstanceFactory().create(getViewModel)
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
@@ -104,6 +104,14 @@ abstract class BaseFragment<RESPONSE : BaseResponse, V : BaseViewModel> : Fragme
 
      open fun hideProgress() {
         mProgress?.visibility = View.GONE
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 }

@@ -62,5 +62,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_fetch"
-        tools:listitem="@layout/item_city_weather" />
+        tools:listitem="@layout/item_weather" />
 </androidx.constraintlayout.widget.ConstraintLayout>

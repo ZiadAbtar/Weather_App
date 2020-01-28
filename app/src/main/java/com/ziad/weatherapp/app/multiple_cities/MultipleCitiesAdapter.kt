@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ziad.weatherapp.R
-import com.ziad.weatherapp.data.remote.response.City
+import com.ziad.weatherapp.data.remote.response.models.City
 
 class MultipleCitiesAdapter(val context: Context) :
     RecyclerView.Adapter<MultipleCitiesAdapter.CityWeatherViewHolder>() {
@@ -22,7 +22,7 @@ class MultipleCitiesAdapter(val context: Context) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityWeatherViewHolder {
         return CityWeatherViewHolder(
             LayoutInflater.from(context).inflate(
-                R.layout.item_city_weather,
+                R.layout.item_weather,
                 parent,
                 false
             )

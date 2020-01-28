@@ -16,31 +16,90 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.ziad.weatherapp.R
+import com.ziad.weatherapp.app.base.BaseFragment
+import com.ziad.weatherapp.data.remote.request.CurrentCityRequest
+import com.ziad.weatherapp.data.remote.response.CurrentCityResponse
+import com.ziad.weatherapp.data.remote.response.models.Data
+import java.util.*
 
-class CurrentLocationFragment : Fragment() {
+class CurrentLocationFragment : BaseFragment<CurrentCityResponse, CurrentLocationViewModel>() {
 
     private val MY_PERMISSION_ACCESS_COURSE_LOCATION: Int = 123
 
-    private lateinit var currentLocationViewModel: CurrentLocationViewModel
     private var locationManager: LocationManager? = null
+
+    private var lat: Double = 0.0
+    private var lon: Double = 0.0
+
+    private lateinit var mCityNameTextView: TextView
+    private lateinit var mRecyclerView: RecyclerView
+
+
+    override val getViewModel: Class<CurrentLocationViewModel>
+        get() = CurrentLocationViewModel::class.java
+    override val getLayoutId: Int
+        get() = R.layout.fragment_current_location
+
+    override fun callPrimaryApi() {
+        showProgress()
+        viewModel.getCurrentCityWeather(CurrentCityRequest().setLat(lat).setLon(lon))
+    }
+
+    override fun onSuccess(response: CurrentCityResponse) {
+        if (response.data.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), R.string.Unexpected_error, Toast.LENGTH_LONG).show()
+            return
+        }
+        val adapter = CurrentCityAdapter(requireContext())
+        mCityNameTextView.text = response.city.name
+        mRecyclerView.adapter = adapter
+        adapter.setData(response.data)
+        clubByDay(response.data)
+
+    }
+
+    private fun clubByDay(data: List<Data>) {
+
+        val calendar = Calendar.getInstance()
+        data.forEach {
+            calendar.timeInMillis = it.dt * 1000
+            val calDay = calendar.get(Calendar.DAY_OF_MONTH)
+            val calMonth = calendar.get(Calendar.MONTH)
+            val calYear = calendar.get(Calendar.YEAR)
+            val stringDate = "$calDay/${calMonth + 1}/$calYear"
+
+            it.myDate = stringDate
+
+            it.myHour = calendar.get(Calendar.HOUR_OF_DAY).toString()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        currentLocationViewModel =
-            ViewModelProvider.NewInstanceFactory().create(CurrentLocationViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_current_location, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        currentLocationViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        locationManager = activity?.getSystemService(LOCATION_SERVICE) as LocationManager
+    ): View {
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        mCityNameTextView = view.findViewById(R.id.tv_city_name)
+        mRecyclerView = view.findViewById(R.id.rv_weather)
+        if (mRecyclerView.itemDecorationCount == 0) {
+            mRecyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
+
+        return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        locationManager = mActivity.getSystemService(LOCATION_SERVICE) as LocationManager
 
         if (Build.VERSION.SDK_INT >= 23 &&
             ContextCompat.checkSelfPermission(
@@ -53,24 +112,22 @@ class CurrentLocationFragment : Fragment() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                requireActivity(), arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                mActivity,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ),
                 MY_PERMISSION_ACCESS_COURSE_LOCATION
             )
         } else {
             startLocationTracker()
         }
-
-        return root
     }
 
-    //define the listener
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-            Toast.makeText(
-                requireContext(),
-                "" + location.longitude + ":" + location.latitude,
-                Toast.LENGTH_SHORT
-            ).show()
+            lat = location.latitude
+            lon = location.longitude
+            callPrimaryApi()
         }
 
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
@@ -101,7 +158,9 @@ class CurrentLocationFragment : Fragment() {
             if (isGPSEnabled) LocationManager.GPS_PROVIDER else LocationManager.NETWORK_PROVIDER
 
         val lastKnownLocation = locationManager?.getLastKnownLocation(provider)
-
+        lat = lastKnownLocation?.latitude ?: 0.0
+        lon = lastKnownLocation?.longitude ?: 0.0
+        callPrimaryApi()
         locationManager?.requestLocationUpdates(
             provider,
             30000L,
@@ -112,6 +171,6 @@ class CurrentLocationFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-
+        locationManager?.removeUpdates(locationListener)
     }
 }

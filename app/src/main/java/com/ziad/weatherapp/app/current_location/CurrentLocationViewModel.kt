@@ -1,13 +1,18 @@
 package com.ziad.weatherapp.app.current_location
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ziad.weatherapp.app.base.BaseViewModel
+import com.ziad.weatherapp.data.remote.repository.CurrentCityRepository
+import com.ziad.weatherapp.data.remote.request.CurrentCityRequest
+import kotlinx.coroutines.launch
 
-class CurrentLocationViewModel : ViewModel() {
+class CurrentLocationViewModel : BaseViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is current location Fragment"
+    fun getCurrentCityWeather(currentCityRequest: CurrentCityRequest) {
+        viewModelScope.launch {
+            handleResult(
+                CurrentCityRepository.getCurrentWeatherByCitiesIds(currentCityRequest)
+            )
+        }
     }
-    val text: LiveData<String> = _text
 }
