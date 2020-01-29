@@ -36,14 +36,14 @@ class MultipleCitiesAdapter(val context: Context) :
     override fun onBindViewHolder(holder: CityWeatherViewHolder, position: Int) {
         val city = cities[position]
         with(holder) {
-            maxTempTextView.text = city.main?.temp_max.toString()
-            minTempTextView.text = city.main?.temp_min.toString()
+            maxTempTextView.text = city.main?.temp_max.toString() + " °C"
+            minTempTextView.text = city.main?.temp_min.toString() + " °C"
             cityNameTextView.text = city.name
             val desc = city.weatherList?.get(0)
             desc?.let {
                 weatherDescTextView.text = it.description + " / " + it.main
             }
-            windTextView.text = city.wind?.speed.toString()
+            windTextView.text = city.wind?.speed.toString() + " Km/h"
         }
     }
 

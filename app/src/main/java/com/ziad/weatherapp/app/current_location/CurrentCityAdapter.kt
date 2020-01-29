@@ -36,7 +36,7 @@ class CurrentCityAdapter(val context: Context) :
     override fun onBindViewHolder(holder: CurrentCityWeather, position: Int) {
         val day = days[position]
         with(holder) {
-            cityNameTextView.text = "${day.myHour}h"
+            cityNameTextView.text = "${day.myHour}:00 h"
             dayTextView.text = day.myDate
             if (position == 0) {
                 dayTextView.visibility = View.VISIBLE
@@ -48,13 +48,13 @@ class CurrentCityAdapter(val context: Context) :
                     dayTextView.visibility = View.VISIBLE
                 }
             }
-            maxTempTextView.text = day.main?.temp_max.toString()
-            minTempTextView.text = day.main?.temp_min.toString()
+            maxTempTextView.text = day.main?.temp_max.toString() + " °C"
+            minTempTextView.text = day.main?.temp_min.toString() + " °C"
             val desc = day.weatherList?.get(0)
             desc?.let {
                 weatherDescTextView.text = it.description + " / " + it.main
             }
-            windTextView.text = day.wind?.speed.toString()
+            windTextView.text = day.wind?.speed.toString() + " Km/h"
         }
     }
 
