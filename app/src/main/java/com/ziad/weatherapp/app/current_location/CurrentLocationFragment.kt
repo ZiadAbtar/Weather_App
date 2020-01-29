@@ -100,7 +100,9 @@ class CurrentLocationFragment : BaseFragment<CurrentCityResponse, CurrentLocatio
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         locationManager = mActivity.getSystemService(LOCATION_SERVICE) as LocationManager
+    }
 
+    private fun activateLocation() {
         if (Build.VERSION.SDK_INT >= 23 &&
             ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -111,8 +113,7 @@ class CurrentLocationFragment : BaseFragment<CurrentCityResponse, CurrentLocatio
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(
-                mActivity,
+            requestPermissions(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ),
@@ -173,5 +174,10 @@ class CurrentLocationFragment : BaseFragment<CurrentCityResponse, CurrentLocatio
     override fun onPause() {
         super.onPause()
         locationManager?.removeUpdates(locationListener)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activateLocation()
     }
 }
