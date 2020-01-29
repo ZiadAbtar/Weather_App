@@ -147,6 +147,7 @@ class CurrentLocationFragment : BaseFragment<CurrentCityResponse, CurrentLocatio
 
             startLocationTracker()
         } else {
+            mActivity.onBackPressed()
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
