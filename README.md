@@ -24,7 +24,7 @@ The app is build with latest libraries and technologies using the below
 * **Retrofit2** coupled with **OkHttp** and **Gson** for API calls
 * **Navigation component** for navigating between fragments (only use within the app is in the BottomNavigationView in the MainActivity)
 
-## Future work And Improovments
+## Future work And Improvments
 * Unit test and Code coverage
 * Saving state when switching between fragments
 * UX/UI tweaks
